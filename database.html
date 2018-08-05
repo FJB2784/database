@@ -1,0 +1,70 @@
+﻿<html>
+
+<body>
+
+  <h3>データベースからデータを取得</h3>
+  <p>
+    <div id="name_hyouzi"></div>
+  </p>
+  <p>
+    <div id="money_hyouzi"></div>
+  </p>
+
+  <hr>
+
+  <h3>データベースに登録</h3>
+  <form>
+    <input type='text' class="form-control" id="nameInput1" placeholder="名前">
+    <input type='text' class="form-control" id="moneyInput1" placeholder="数値">
+    <button onclick="db()">送信</button>
+  </form>
+
+
+  <!-- ↓はfirebaseを使うために外部のjsファイルを読み込んでいる -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+  <script>
+    // ここからfirebaseの認証情報
+    var config = {
+      apiKey: "ここはセキュリティ上の理由によって",
+      authDomain: "入れてません",
+      databaseURL: "なのでFirebaseの管理画面に",
+      projectId: "ログインして「Authentication」の",
+      storageBucket: "「Web設定」から確認して",
+      messagingSenderId: "入れてください"
+    };
+    firebase.initializeApp(config);
+    // ここまでfirebaseの認証情報
+
+
+    // ここから挿入処理
+    function db() {
+      var user = "testID"; // ここにユーザのIDを入れる
+      var nameInput2 = document.getElementById("nameInput1").value // HTML内のid「nameInput1」が付いた要素に入力された内容（.val）を取得し、変数「nameInput2」に代入している
+      var moneyInput2 = document.getElementById("moneyInput1").value // HTML内のid「moneyInput1」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput2」に代入している
+      var commentsRef = firebase.database().ref(user); // 挿入する際の項目名を指定
+      commentsRef.set({ name: nameInput2, money: moneyInput2 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
+      console.log(moneyInput) // どのような値が挿入されたのかコンソールに表示している
+      console.log(nameInput) // どのような値が挿入されたのかコンソールに表示している
+    };
+    // ここまで挿入処理
+
+
+    // ここからデータ取得処理
+    var user = "testID"; // ここにユーザのIDを入れる、本番はカードリーダから取得したIDが入る
+    var database = firebase.database(); //firebaseのデータベースを使う事を変数で定めている
+    var dataRef = database.ref('/' + user); // 取得するデータの項目名を定めている。プログラムには「'/'+user」は「/ユーザーID」に見えている。
+    dataRef.once("value")
+      .then(function (snapshot) {
+        document.getElementById("name_hyouzi").innerHTML = snapshot.child("name").val(); // 項目の「name」に入っている値を取得し、id「name_hyouzi」の要素に代入している
+        document.getElementById("money_hyouzi").innerHTML = snapshot.child("money").val(); // 項目の「money」に入っている値を取得し、id「name_hyouzi」の要素に代入している
+      });
+    // ここまでデータ取得処理
+
+
+
+
+  </script>
+
+</body>
+
+</html>
