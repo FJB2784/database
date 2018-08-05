@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 
 <body>
 
@@ -36,19 +36,6 @@
     // ここまでfirebaseの認証情報
 
 
-    // ここから挿入処理
-    function db() {
-      var user = "testID"; // ここにユーザのIDを入れる
-      var nameInput2 = document.getElementById("nameInput1").value // HTML内のid「nameInput1」が付いた要素に入力された内容（.val）を取得し、変数「nameInput2」に代入している
-      var moneyInput2 = document.getElementById("moneyInput1").value // HTML内のid「moneyInput1」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput2」に代入している
-      var commentsRef = firebase.database().ref(user); // 挿入する際の項目名を指定
-      commentsRef.set({ name: nameInput2, money: moneyInput2 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
-      console.log(moneyInput) // どのような値が挿入されたのかコンソールに表示している
-      console.log(nameInput) // どのような値が挿入されたのかコンソールに表示している
-    };
-    // ここまで挿入処理
-
-
     // ここからデータ取得処理
     var user = "testID"; // ここにユーザのIDを入れる、本番はカードリーダから取得したIDが入る
     var database = firebase.database(); //firebaseのデータベースを使う事を変数で定めている
@@ -61,6 +48,17 @@
     // ここまでデータ取得処理
 
 
+    // ここから挿入処理
+    function db() {
+      var user = "testID"; // ここにユーザのIDを入れる
+      var nameInput2 = document.getElementById("nameInput1").value // HTML内のid「nameInput1」が付いた要素に入力された内容（.val）を取得し、変数「nameInput2」に代入している
+      var moneyInput2 = document.getElementById("moneyInput1").value // HTML内のid「moneyInput1」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput2」に代入している
+      var commentsRef = firebase.database().ref(user); // 挿入する際の項目名を指定
+      commentsRef.set({ name: nameInput2, money: moneyInput2 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
+      console.log(moneyInput) // どのような値が挿入されたのかコンソールに表示している
+      console.log(nameInput) // どのような値が挿入されたのかコンソールに表示している
+    };
+    // ここまで挿入処理
 
 
   </script>
