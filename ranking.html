@@ -1,0 +1,53 @@
+﻿<html>
+
+<body>
+
+  <p id = "rank_1"></p>
+  <p id = "rank_2"></p>
+  <p id = "rank_3"></p>
+  <p id = "rank_4"></p>
+  <p id = "rank_5"></p>
+<p>画面は5秒ごとに更新されます</p>
+
+
+  <!-- ↓はfirebaseを使うために外部のjsファイルを読み込んでいる -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+
+  <script>
+    // ここからfirebaseの認証情報
+    var config = {
+      apiKey: "AIzaSyA-upgtmxNK_WG-Rh6TzxpIFJbEzze6Kac",
+      authDomain: "project-d41aa.firebaseapp.com",
+      databaseURL: "https://project-d41aa.firebaseio.com",
+      projectId: "project-d41aa",
+      storageBucket: "project-d41aa.appspot.com",
+      messagingSenderId: "362114663097"
+    };
+    firebase.initializeApp(config);
+    // ここまでfirebaseの認証情報
+
+
+window.onload = function(){
+  //1000ミリ秒（1秒）毎に関数「showNowDate()」を呼び出す
+  setInterval("rank()",5000);
+}
+var i= 5;
+    // データを高い物から5個取得し昇順で表示
+    function rank() {
+      console.log("画面更新");
+      firebase.database().ref('/').orderByChild('money').limitToLast(5).on("child_added", function (snapshot) {
+        document.getElementById("rank_"+i).innerHTML = i + "位　" +snapshot.val().name + "さん ： " + snapshot.val().money + " ポイント";
+        i --;
+      });
+      i = 5;
+    }
+
+//https://firebase.googleblog.com/2014/11/firebase-now-with-more-querying.html
+//https://himakan.net/program/firebase/realtimedb_where_clause
+//https://firebase.google.com/docs/database/web/lists-of-data?hl=ja
+
+  </script>
+
+</body>
+
+</html>
