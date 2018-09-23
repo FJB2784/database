@@ -39,6 +39,7 @@
   <br> 保存方法はupdateを使用しています。updateではデータの更新が可能です。（新規登録は不可）
   <br> updateを使用してデータを更新した場合は、操作しなかった他のデータが消滅することがありません。
   <br> 用意した配列へ変更する値を複数格納し実行することで、複数の値を同時に更新することも可能です。
+  <br> ゲームで使用する場合はこちらを使用してください
 
 
   <hr> IDの代わりに「testID」が入っています。
@@ -79,10 +80,10 @@
     // ここから挿入処理
     function db1() {
       var idm = "testID"; // ここにユーザのIDを入れる
-      var nameInput3 = document.getElementById("nameInput1").value // HTML内のid「nameInput3」が付いた要素に入力された内容（.val）を取得し、変数「nameInput2」に代入している
-      var moneyInput3 = document.getElementById("moneyInput1").value // HTML内のid「moneyInput3」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput2」に代入している
+      var nameInput3 = document.getElementById("nameInput1").value // HTML内のid「nameInput1」が付いた要素に入力された内容（.val）を取得し、変数「nameInput3」に代入している
+      var moneyInput3 = document.getElementById("moneyInput1").value // HTML内のid「moneyInput1」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput3」に代入している
       var commentsRef = firebase.database().ref(idm); // 挿入する際の項目名を指定
-      commentsRef.set({ name: nameInput3, money: moneyInput3 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
+      commentsRef.set({ name: nameInput3, money: moneyInput3 }); // nameにnameInput1に入力した値が、moneyにmoneyInput1に入力した値が挿入される
       console.log(moneyInput3) // どのような値が挿入されたのかコンソールに表示している
       console.log(nameInput3) // どのような値が挿入されたのかコンソールに表示している
     };
@@ -94,13 +95,13 @@
       console.log("値を加算")
       var database = firebase.database();
       var idm = "testID"; // ここにユーザのIDを入れる
-      var nameInput3 = document.getElementById("nameInput2").value // HTML内のid「nameInput2」が付いた要素に入力された内容（.val）を取得し、変数「nameInput2」に代入している
-      var moneyInput3 = document.getElementById("moneyInput2").value // HTML内のid「moneyInput2」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput2」に代入している
+      var nameInput3 = document.getElementById("nameInput2").value // HTML内のid「nameInput2」が付いた要素に入力された内容（.val）を取得し、変数「nameInput3」に代入している
+      var moneyInput3 = document.getElementById("moneyInput2").value // HTML内のid「moneyInput2」が付いた要素に入力された内容（.val）を取得し、変数「「moneyInput3」に代入している
       var dataRef = database.ref('/' + idm); // どのユーザーのデータを編集するのか（idmはカードから取得した文字列）
       dataRef.once("value").then(function (snapshot) { // ここからUpdate文
         var money1 = snapshot.child("money").val(); // データベースに格納されていた元の値を取得
         var updates = {}; // データベースに挿入する値を格納するための配列
-        updates['/' + idm + '/money'] = parseInt(money1) + parseInt(moneyInput3); // どのデータを操作するのか指定（この場合は「/ユーザーID/money」の値）し、値をも指定（変数は数字型にキャストしている）
+        updates['/' + idm + '/money'] = parseInt(money1) + parseInt(moneyInput3); // どのデータを操作するのか指定（この場合は「/ユーザーID/money」の値）し、値も指定（変数は数字型にキャストしている）
         return firebase.database().ref().update(updates); // 書き込みを実行
       });
     }
