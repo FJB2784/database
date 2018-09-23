@@ -1,0 +1,99 @@
+﻿<html>
+
+<body>
+  <h1>カード新規登録画面</h1>
+  ※使用する前にscriptタグ内の認証情報を書き換えてください
+  <h3>データベースからデータを取得</h3>
+  <p id="name_hyouzi">取得した名前</p>
+  <p id="money_hyouzi">取得した値</p>
+  <input type="button" value="データの取得" onclick="db0();">
+
+
+  <hr>
+
+
+  <h3>データベースにカードを新規登録　＆　ポイント贈与</h3>
+  <form>
+    <input type='text' class="form-control" id="nameInput1" placeholder="登録する名前">
+    <input type="button" value="データの登録" onclick="db1();">
+  </form>
+  <br> データベースに「testID」という項目名で新規登録し、100ポイントを付与します。
+  <br> データベースに既に「testID」が登録されている状態だと実行されません。
+  <hr>
+  <input type="button" value="データの削除" onclick="db2();">
+
+
+
+
+  <hr> IDの代わりに「testID」が入っています。
+  <br> データベースで「testID」の中身を見れば挿入された値を確認することができます。
+
+
+  <!-- ↓はfirebaseを使うために外部のjsファイルを読み込んでいる -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+
+  <script>
+    // ここからfirebaseの認証情報
+    var config = {
+      apiKey: "ここはセキュリティ上の理由によって",
+      authDomain: "入れてません",
+      databaseURL: "なのでFirebaseの管理画面に",
+      projectId: "ログインして「Authentication」の",
+      storageBucket: "「Web設定」から確認して",
+      messagingSenderId: "入れてください"
+    };
+    firebase.initializeApp(config);
+    // ここまでfirebaseの認証情報
+
+
+    // ここからデータ取得処理
+    function db0() {
+      console.log("表示データの更新");
+      var idm = "testID"; // ここにユーザのIDを入れる、本番はカードリーダから取得したIDが入る
+      var database = firebase.database(); //firebaseのデータベースを使う事を変数で定めている
+      var dataRef = database.ref('/' + idm); // 取得するデータの項目名を定めている。プログラムには「'/'+user」は「/ユーザーID」に見えている。
+      dataRef.once("value").then(function (snapshot) {
+        document.getElementById("name_hyouzi").innerHTML = snapshot.child("name").val(); // 項目の「name」に入っている値を取得し、id「name_hyouzi」の要素に代入している
+        document.getElementById("money_hyouzi").innerHTML = snapshot.child("money").val(); // 項目の「money」に入っている値を取得し、id「name_hyouzi」の要素に代入している
+      });
+    }
+    // ここまでデータ取得処理
+
+
+    // ここから挿入処理
+    function db1() {
+      var hantei;
+      var idm = "testID"; // ここにユーザのIDを入れる、本番はカードリーダから取得したIDが入る
+      var database = firebase.database(); //firebaseのデータベースを使う事を変数で定めている
+      var dataRef = database.ref('/' + idm); // 取得するデータの項目名を定めている。プログラムには「'/'+user」は「/ユーザーID」に見えている。
+      var nameInput = document.getElementById("nameInput1").value
+      dataRef.once("value").then(function (snapshot) {
+        hantei = snapshot.child("name").val();
+        console.log("hantei:" + hantei);
+        console.log("input:"+nameInput);
+
+        if (hantei != undefined || nameInput == "") {
+          console.log("出来ねえ");
+          alert('名前が入力されていない、もしくは新規登録ではないため登録できません。');
+        } else {
+          console.log("出来た");
+          var commentsRef = firebase.database().ref(idm); // 挿入する際の項目名を指定
+          commentsRef.set({ name: nameInput, money: 100 }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
+        }
+      });
+    };
+    // ここまで挿入処理
+
+    //データ削除
+    function db2() {
+      var idm = "testID"; // ここにユーザのIDを入れる
+      var commentsRef = firebase.database().ref(idm); // 挿入する際の項目名を指定
+      commentsRef.set({ name: null, money: null }); // nameにnameInputに入力した値が、moneyにmoneyInputに入力した値が挿入される
+
+    }
+
+  </script>
+
+</body>
+
+</html>
