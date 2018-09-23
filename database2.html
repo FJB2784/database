@@ -1,0 +1,57 @@
+﻿<html>
+
+<body>
+    ※1 使用する前にscriptタグ内の認証情報を書き換えてください<br>
+    ※2 結果はconsoleに表示されます<br>
+  <button onclick="db3();">全取得</button><br>
+  <button onclick="db4();">高い物5個を取得</button>
+
+
+
+  <!-- ↓はfirebaseを使うために外部のjsファイルを読み込んでいる -->
+  <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+
+  <script>
+    // ここからfirebaseの認証情報
+    var config = {
+      apiKey: "ここはセキュリティ上の理由によって",
+      authDomain: "入れてません",
+      databaseURL: "なのでFirebaseの管理画面に",
+      projectId: "ログインして「Authentication」の",
+      storageBucket: "「Web設定」から確認して",
+      messagingSenderId: "入れてください"
+    };
+    firebase.initializeApp(config);
+    // ここまでfirebaseの認証情報
+
+
+    //データをすべて取得
+    function db3() {
+      console.log("値を加算")
+      var database = firebase.database();
+      var dataRef = database.ref('/');
+      dataRef.once('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val().money;
+          console.log(childKey);
+          console.log(childData);
+        });
+      });
+    }
+
+    // データを高い物から5個取得し昇順で表示
+    function db4() {
+      firebase.database().ref('/').orderByChild('money').limitToLast(5).on("child_added", function (snapshot) {
+        console.log(snapshot.key + " ： " + snapshot.val().money + " ポイント");
+      });
+    }
+//https://firebase.googleblog.com/2014/11/firebase-now-with-more-querying.html
+//https://himakan.net/program/firebase/realtimedb_where_clause
+//https://firebase.google.com/docs/database/web/lists-of-data?hl=ja
+
+  </script>
+
+</body>
+
+</html>
