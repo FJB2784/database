@@ -1,0 +1,21 @@
+/*index.htmlから記述*/
+/*
+div {
+    padding: 5px 10px;
+    border: 1px solid lightgray;
+}
+*/
+
+/*index3.htmlから記述*/
+div {
+    padding: 5px 10px;
+}
+
+.container .row div, .container-fruid .row div {
+    border: 1px solid lightgray;
+}
+
+.container .row div div, .container-fruid .row div div{
+    color: darkblue;
+    background-color: lightblue;
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+    <title>ランキング</title>
+    <!-- CSSファイルを読み込む-->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <!-- Awesomeを読み込む-->
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url("bg.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-color: #464646;
+        }
+
+        #cover {
+            margin: 5vh 5vh;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <!--ここにコンテンツを書いていく-->
+    <div class="container">
+        <div id="cover">
+            <div class="row">
+                <div class="col-sm-12">
+                    <center>
+                        <h1 style="color:white;">Ｒａｎｋｉｎｇ</h1>
+                    </center>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table table-dark table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>順位</th>
+                                <th>UserName</th>
+                                <th>Point</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="bg-primary">
+                                <th>1</th>
+                                <td id="name_1"> </td>
+                                <td id="point_1"> </td>
+                            </tr>
+                            <tr class="bg-success">
+                                <th>2</th>
+                                <td id="name_2"> </td>
+                                <td id="point_2"> </td>
+                            </tr>
+                            <tr class="bg-danger">
+                                <th>3</th>
+                                <td id="name_3"> </td>
+                                <td id="point_3"> </td>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <td id="name_4"> </td>
+                                <td id="point_4"> </td>
+                            </tr>
+                            <tr>
+                                <th>5</th>
+                                <td id="name_5"> </td>
+                                <td id="point_5"> </td>
+                            </tr>
+                            <th>6</th>
+                            <td id="name_6"> </td>
+                            <td id="point_6"> </td>
+                            </tr>
+                            <tr>
+                                <th>7</th>
+                                <td id="name_7"> </td>
+                                <td id="point_7"> </td>
+                            </tr>
+                            <tr>
+                                <th>8</th>
+                                <td id="name_8"> </td>
+                                <td id="point_8"> </td>
+                            </tr>
+                            <tr>
+                                <th>9</th>
+                                <td id="name_9"> </td>
+                                <td id="point_9"> </td>
+                            </tr>
+                            <tr>
+                                <th>10</th>
+                                <td id="name_10"> </td>
+                                <td id="point_10"> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <h5 style="color:white; text-align: right;">
+                <i class="fas fa-sync-alt fa-spin"></i>ランキングは5秒ごとに更新されます</h5>
+        </div>
+    </div>
+    <!-- Javascriptファイルを読み込む-->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script src="account.js"></script>
+    <script>
+
+        window.onload = function () {
+            //1000ミリ秒（1秒）毎に関数「showNowDate()」を呼び出す
+            setInterval("rank()", 5000);
+        }
+        var i = 5;
+        // データを高い物から5個取得し昇順で表示
+        function rank() {
+            console.log("画面更新");
+            firebase.database().ref('/').orderByChild('money').limitToLast(10).on("child_added", function (snapshot) {
+                document.getElementById("name_" + i).innerHTML = snapshot.val().name + "さん";
+                document.getElementById("point_" + i).innerHTML = snapshot.val().money + " ポイント";
+                i--;
+            });
+            i = 5;
+        }
+
+  //https://firebase.googleblog.com/2014/11/firebase-now-with-more-querying.html
+  //https://himakan.net/program/firebase/realtimedb_where_clause
+  //https://firebase.google.com/docs/database/web/lists-of-data?hl=ja
+
+    </script>
+</body>
+
+</html>

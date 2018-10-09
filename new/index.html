@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+    <title>管理画面</title>
+    <!-- CSSファイルを読み込む-->
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <style>
+        body{
+        background-image: url("bg.jpg");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        background-color: #464646;
+    }
+    </style>
+</head>
+
+<body>
+    <!--ここにコンテンツを書いていく-->
+    <div class="container">
+        <center style="color:white; background: rgba(0,0,0,0.3); border-radius: 20px 20px 20px 20px;">
+            <h1 class="display-4">アカウント管理画面</h1>
+            <p>カードの新規登録やポイントの初期化などができます。</p>
+            <p>ポイントが尽きてしまっても、アカウントを削除し再登録することで100ポイントから始めることができます。</p>
+
+        </center>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="width: 350px;height: 400px;">
+                    <div class="card-header">
+                        <center>アカウントの作成</center>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>カードを新規登録して、100ポイントを受け取ります。</p>
+                            <p>下に登録したい名前を記入し、ASAKAカードをカードリーダーに置いた状態で「登録」を押してください。</p>
+                            <input type='text' class="form-control" id="nameInput1" placeholder="登録する名前">
+                        </blockquote>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-block btn-outline-primary" value="登録" onclick="db1();">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" style="width: 350px;height: 400px;">
+                    <div class="card-header">
+                        <center>アカウントの確認</center>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>登録されているアカウントの確認をします。</p>
+                            <p>ASAKAカードをカードリーダーに置いた状態で「確認」を押してください。</p>
+                        </blockquote>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-block btn-outline-primary" value="確認" onclick="db2();">
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="card" style="width: 350px;height: 400px;">
+                    <div class="card-header">
+                        <center>アカウントの削除</center>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>こちらではアカウントの情報削除することが可能です。</p>
+                            <p>アカウントを削除する際はカードリーダーにカードを置いた状態で「削除」をクリックしてください。</p>
+                        </blockquote>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-block btn-outline-danger" value="削除" onclick="db3();">
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </div>
+    <!-- Javascriptファイルを読み込む-->
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.3.1/firebase.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/account.js"></script>
+    <script type="text/javascript" src="js/yjdmd5.js"></script>
+    <script type="text/javascript" src="js/nfc_client.js"></script>
+
+</body>
+
+</html>
